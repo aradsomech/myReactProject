@@ -15,6 +15,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Switch } from "@mui/material";
+import { useSelector } from "react-redux";
 // import { Link } from "react-router-dom";
 // import ROUTES from "../../routes/ROUTES";
 // import NavLinkComponent from "./NavLinkComponent";
@@ -29,12 +30,14 @@ import Links from "./ui/Links";
 import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import { useState } from "react";
 import FilterComponent from "./ui/FilterComponent";
+import { useNavigate } from "react-router-dom";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
-
+  const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -49,6 +52,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -85,6 +92,11 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {userData ? (
+        <MenuItem onClick={handleLogout}>logout</MenuItem>
+      ) : (
+        <MenuItem onClick={() => navigate("/login")}>login</MenuItem>
+      )}
     </Menu>
   );
 
