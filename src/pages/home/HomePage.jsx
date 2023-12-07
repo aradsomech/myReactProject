@@ -14,7 +14,7 @@ const HomePage = () => {
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const query = useQueryParams();
-
+  console.log(userData);
   useEffect(() => {
     axios
       .get("/cards")
