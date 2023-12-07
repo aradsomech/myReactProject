@@ -31,6 +31,8 @@ import LeftDrawerComponent from "./ui/LeftDrawerComponent";
 import { useState } from "react";
 import FilterComponent from "./ui/FilterComponent";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,7 +57,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   };
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+    toast.success("You logged out successfully");
   };
 
   const handleMobileMenuOpen = (event) => {

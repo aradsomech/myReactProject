@@ -17,6 +17,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CardComponent = ({
   _id,
@@ -41,10 +43,11 @@ const CardComponent = ({
     axios
       .delete(`/cards/${_id}`)
       .then(() => {
+        toast.success("Deleted successfully");
         onDeleteCard(_id);
       })
       .catch((err) => {
-        console.log("err", err);
+        toast.error("Deletion isnt allowed");
       });
   };
   const handleClickEditCard = () => {
@@ -55,6 +58,10 @@ const CardComponent = ({
       .patch(`/cards/${_id}`)
       .then(() => {
         setIsLike(!isLike);
+        const toastMessage = isLike
+          ? "You disliked a card"
+          : "You liked a card";
+        toast.success(toastMessage);
       })
       .catch((err) => {
         console.log("err", err);
