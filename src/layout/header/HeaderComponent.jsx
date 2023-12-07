@@ -170,9 +170,18 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{
+              display: { xs: "none", sm: "block" },
+              maxWidth: "50px",
+              maxHeight: "50px",
+              overflow: "hidden",
+            }}
           >
-            LOGO
+            <img
+              src="logo.jpg"
+              alt="Logo"
+              style={{ width: "100%", height: "100%", objectFit: "contain" }}
+            />
           </Typography>
           <Links />
           <FilterComponent />
