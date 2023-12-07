@@ -66,7 +66,7 @@ const CreateCardPage = () => {
   return (
     <Container sx={{ padding: "50px" }}>
       <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
-        Card - Edit
+        Card - Create
       </Typography>
       <Typography variant="body1" sx={{ mb: 1, padding: "3px", ml: "7px" }}>
         Put a new values in the correct input
@@ -204,7 +204,7 @@ const CreateCardPage = () => {
             sx={{ mt: 2, width: "100%", ml: "0%", bgcolor: "lightskyblue" }}
             onClick={handleUpdateChangesClick}
           >
-            Update Changes
+            Create Card
           </Button>
         </Grid>
         <Grid item xs>

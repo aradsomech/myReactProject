@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { normalizeData } from "./normalizeData";
 import { validateRegister } from "../../validation/registerValidation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage = () => {
   const [inputsValue, setInputsValue] = useState({
@@ -30,7 +33,7 @@ const RegisterPage = () => {
     houseNumber: "",
     zip: "",
   });
-
+  const [errors, setErrors] = useState({});
   const handleInputsChange = (e) => {
     //step 1
     // setInputsValue((currentState) => {
@@ -59,12 +62,16 @@ const RegisterPage = () => {
     }));
   };
   const handleSubmit = async (event) => {
+    console.log("inputsValue", inputsValue);
     try {
       event.preventDefault();
+      toast.error("invalid paramaters");
       // inputsValue.isBusiness = false;
-      const errors = validateRegister(inputsValue);
+      setErrors(validateRegister(inputsValue));
       console.log(errors);
-      if (errors) return;
+      if (errors) {
+        return;
+      }
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
       console.log("data", data);
@@ -72,15 +79,17 @@ const RegisterPage = () => {
       console.log(err);
     }
   };
-
   return (
     <Box
+      onSubmit={handleSubmit}
       sx={{
         marginTop: 8,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
+      // noValidate
+      // autoComplete="off"
     >
       <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
         <LockOutlinedIcon />
@@ -88,7 +97,7 @@ const RegisterPage = () => {
       <Typography component="h1" variant="h5">
         Sign up
       </Typography>
-      <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <Box component="form" noValidate sx={{ mt: 3 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={4}>
             <TextField
@@ -101,6 +110,8 @@ const RegisterPage = () => {
               autoFocus
               value={inputsValue.first}
               onChange={handleInputsChange}
+              error={Boolean(errors?.first)}
+              helperText={errors?.first}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -113,6 +124,8 @@ const RegisterPage = () => {
               autoFocus
               value={inputsValue.middle}
               onChange={handleInputsChange}
+              error={Boolean(errors?.middle)}
+              helperText={errors?.middle}
             />
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -125,6 +138,8 @@ const RegisterPage = () => {
               autoComplete="family-name"
               value={inputsValue.last}
               onChange={handleInputsChange}
+              error={Boolean(errors?.last)}
+              helperText={errors?.last}
             />
           </Grid>
           <Grid item xs={12}>
@@ -137,6 +152,8 @@ const RegisterPage = () => {
               autoComplete="email"
               value={inputsValue.email}
               onChange={handleInputsChange}
+              error={Boolean(errors?.email)}
+              helperText={errors?.email}
             />
           </Grid>
           <Grid item xs={12}>
@@ -150,6 +167,8 @@ const RegisterPage = () => {
               autoComplete="new-password"
               value={inputsValue.password}
               onChange={handleInputsChange}
+              error={Boolean(errors?.password)}
+              helperText={errors?.password}
             />
           </Grid>
           <Grid item xs={12}>
@@ -162,6 +181,8 @@ const RegisterPage = () => {
               autoComplete="new-phone"
               value={inputsValue.phone}
               onChange={handleInputsChange}
+              error={Boolean(errors?.phone)}
+              helperText={errors?.phone}
             />
           </Grid>
           <Grid item xs={12}>
@@ -173,6 +194,8 @@ const RegisterPage = () => {
               autoComplete="new-url"
               value={inputsValue.url}
               onChange={handleInputsChange}
+              error={Boolean(errors?.url)}
+              helperText={errors?.url}
             />
           </Grid>
           <Grid item xs={12}>
@@ -184,6 +207,8 @@ const RegisterPage = () => {
               autoComplete="new-alt"
               value={inputsValue.alt}
               onChange={handleInputsChange}
+              error={Boolean(errors?.alt)}
+              helperText={errors?.alt}
             />
           </Grid>
           <Grid item xs={12}>
@@ -195,6 +220,8 @@ const RegisterPage = () => {
               autoComplete="new-state"
               value={inputsValue.state}
               onChange={handleInputsChange}
+              error={Boolean(errors?.state)}
+              helperText={errors?.state}
             />
           </Grid>
           <Grid item xs={12}>
@@ -207,6 +234,8 @@ const RegisterPage = () => {
               autoComplete="new-country"
               value={inputsValue.country}
               onChange={handleInputsChange}
+              error={Boolean(errors?.country)}
+              helperText={errors?.country}
             />
           </Grid>
           <Grid item xs={12}>
@@ -219,6 +248,8 @@ const RegisterPage = () => {
               autoComplete="new-city"
               value={inputsValue.city}
               onChange={handleInputsChange}
+              error={Boolean(errors?.city)}
+              helperText={errors?.city}
             />
           </Grid>
           <Grid item xs={12}>
@@ -231,6 +262,8 @@ const RegisterPage = () => {
               autoComplete="new-street"
               value={inputsValue.street}
               onChange={handleInputsChange}
+              error={Boolean(errors?.street)}
+              helperText={errors?.street}
             />
           </Grid>
           <Grid item xs={12}>
@@ -243,6 +276,8 @@ const RegisterPage = () => {
               autoComplete="new-houseNumber"
               value={inputsValue.houseNumber}
               onChange={handleInputsChange}
+              error={Boolean(errors?.houseNumber)}
+              helperText={errors?.houseNumber}
             />
           </Grid>
           <Grid item xs={12}>
@@ -254,6 +289,8 @@ const RegisterPage = () => {
               autoComplete="new-zip"
               value={inputsValue.zip}
               onChange={handleInputsChange}
+              error={Boolean(errors?.zip)}
+              helperText={errors?.zip}
             />
           </Grid>
           <Grid item xs={12}>
