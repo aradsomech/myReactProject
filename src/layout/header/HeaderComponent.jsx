@@ -9,6 +9,8 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
@@ -196,10 +198,11 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               p: 1,
             }}
           >
-            <Typography sx={{ display: { xs: "none", md: "inline" } }}>
-              {isDarkTheme ? "Dark" : "Light"} Mode
-            </Typography>
-            <Switch checked={isDarkTheme} onChange={handleThemeChange} />
+            <IconButton color="inherit" onClick={handleThemeChange}>
+              <Typography sx={{ display: { xs: "none", md: "inline" } }}>
+                {isDarkTheme ? <DarkModeIcon /> : <LightModeIcon />}
+              </Typography>
+            </IconButton>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
