@@ -25,6 +25,7 @@ import AuthGuard from "../Guard/AuthGuard";
 import BizGuard from "../Guard/BizGuard";
 import MyCardsPage from "../pages/MyCardsPage/MyCardsPage";
 import MyFavoritePage from "../pages/MyFavoritePage/MyFavoritePage";
+import CardDetailPage from "../pages/CardDetailPage/CardDetailPage";
 
 const Router = () => {
   return (
@@ -34,6 +35,10 @@ const Router = () => {
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
       <Route path={ROUTES.MYFAVORITES} element={<MyFavoritePage />} />
+      <Route
+        path={`${ROUTES.CARDDETAIL}/:cardId`}
+        element={<CardDetailPage />}
+      />
       <Route
         path={ROUTES.CREATECARD}
         element={

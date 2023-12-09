@@ -19,16 +19,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  Link as RouterLink,
-  LinkProps as RouterLinkProps,
-  MemoryRouter,
-} from "react-router-dom";
-import { StaticRouter } from "react-router-dom/server";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
-const CardComponent = ({
+const CardDetailComponent = ({
   _id,
   title,
   subTitle,
@@ -37,10 +31,11 @@ const CardComponent = ({
   img,
   alt,
   like,
-  cardNumber,
+
   onDeleteCard,
   onEditCard,
   createdUser,
+  description,
 }) => {
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
@@ -79,12 +74,18 @@ const CardComponent = ({
   return (
     <Card>
       <CardActionArea>
-        <CardMedia component="img" image={img} alt={alt} />
+        <CardMedia component="img" height="300" image={img} alt={alt} />
       </CardActionArea>
       <CardContent>
         <CardHeader title={title} subheader={subTitle} sx={{ p: 0, mb: 1 }} />
         <Divider />
         <Box sx={{ mt: 1 }}>
+          <Typography variant="body2">
+            <Typography fontWeight="700" variant="subtitle1" component="span">
+              Title:{" "}
+            </Typography>
+            {title}
+          </Typography>
           <Typography variant="body2">
             <Typography fontWeight="700" variant="subtitle1" component="span">
               Phone:{" "}
@@ -99,9 +100,9 @@ const CardComponent = ({
           </Typography>
           <Typography variant="body2">
             <Typography fontWeight="700" variant="subtitle1" component="span">
-              Card Number:{" "}
+              description:{" "}
             </Typography>
-            {cardNumber}
+            {description}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
@@ -125,19 +126,15 @@ const CardComponent = ({
             </IconButton>
           </Box>
         </Box>
-        <Button
-          style={{ cursor: "pointer" }}
-          onClick={() => navigate(`/carddetail/${_id}`)}
-          variant="outlined"
-        >
-          Read More
+        <Button onClick={() => navigate(-1)} variant="outlined">
+          Back
         </Button>
       </CardContent>
     </Card>
   );
 };
 
-CardComponent.propTypes = {
+CardDetailComponent.propTypes = {
   _id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
@@ -150,10 +147,11 @@ CardComponent.propTypes = {
   onDeleteCard: PropTypes.func.isRequired,
   onEditCard: PropTypes.func.isRequired,
   createdUser: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
 };
-CardComponent.defaultProps = {
+CardDetailComponent.defaultProps = {
   img: "https://www.livemint.com/lm-img/img/2023/08/14/1600x900/garena_free_fire_max_1688877791610_1691982307589.jpg",
   alt: "running",
 };
 
-export default CardComponent;
+export default CardDetailComponent;
