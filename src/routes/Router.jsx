@@ -23,7 +23,8 @@ import CounterActionsPage from "../playground/l11/CounterActionsPage";
 import CreateCardPage from "../pages/CreateCardPage/CreateCardPage";
 import AuthGuard from "../Guard/AuthGuard";
 import BizGuard from "../Guard/BizGuard";
-import FavoriteCardPage from "../pages/favoritePage/FavoriteCardPage";
+import MyCardsPage from "../pages/MyCardsPage/MyCardsPage";
+import MyFavoritePage from "../pages/MyFavoritePage/MyFavoritePage";
 
 const Router = () => {
   return (
@@ -31,7 +32,8 @@ const Router = () => {
       <Route path={ROUTES.HOME} element={<HomePage />} />
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-      <Route path={ROUTES.FAVEORITECARDS} element={<FavoriteCardPage />} />
+      <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
+      <Route path={ROUTES.MYFAVORITES} element={<MyFavoritePage />} />
       <Route
         path={ROUTES.CREATECARD}
         element={

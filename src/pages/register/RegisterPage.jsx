@@ -15,8 +15,11 @@ import { normalizeData } from "./normalizeData";
 import { validateRegister } from "../../validation/registerValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import ROUTES from "../../routes/ROUTES";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [inputsValue, setInputsValue] = useState({
     first: "",
     middle: "",
@@ -310,7 +313,11 @@ const RegisterPage = () => {
         </Button>
         <Grid container justifyContent="flex-end">
           <Grid item>
-            <Link href="#" variant="body2">
+            <Link
+              onClick={() => navigate(ROUTES.LOGIN)}
+              href="#"
+              variant="body2"
+            >
               Already have an account? Sign in
             </Link>
           </Grid>

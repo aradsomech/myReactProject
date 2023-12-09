@@ -15,10 +15,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { authActions } from "../../store/authSlice";
-import CopyrightComponent from "./ui/CopyrightComponent";
+
 import ROUTES from "../../routes/ROUTES";
 import { validateLogin } from "../../validation/loginValidation";
 import { Alert } from "@mui/material";
@@ -38,7 +35,6 @@ const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(true);
   const [errorsState, setErrorsState] = useState(null);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const autoLogin = useAutoLogin();
   /* logic lvl for js */
   const handleSubmit = async (event) => {
@@ -175,18 +171,16 @@ const LoginPage = () => {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  style={{ cursor: "pointer" }}
+                  onClick={() => navigate(ROUTES.REGISTER)}
+                  variant="body2"
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
-            <CopyrightComponent sx={{ mt: 5 }} />
           </Box>
         </Box>
       </Grid>

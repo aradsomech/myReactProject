@@ -10,7 +10,8 @@ const alwaysLinks = [{ to: ROUTES.HOME, children: "Home page" }];
 const loggedInLinks = [
   { to: "/profile", children: "Profile page" },
   { to: ROUTES.CREATECARD, children: "Create page" },
-  { to: ROUTES.FAVEORITECARDS, children: "Faveorite cards" },
+  { to: ROUTES.MYCARDS, children: "My Cards" },
+  { to: ROUTES.MYFAVORITES, children: "My Favorites" },
 ];
 const loggedOutLinks = [
   { to: ROUTES.REGISTER, children: "Register page" },

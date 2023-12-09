@@ -10,7 +10,7 @@ import useQueryParams from "../../hooks/useQueryParams";
 import CardComponent from "../../components/CardComponent";
 import homePageNormalization from "../home/homePageNormalization";
 
-const FavoriteCardPage = () => {
+const MyCardsPage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
   const navigate = useNavigate();
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
@@ -81,4 +81,4 @@ const FavoriteCardPage = () => {
   );
 };
 
-export default FavoriteCardPage;
+export default MyCardsPage;
