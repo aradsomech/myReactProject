@@ -79,7 +79,7 @@ const CardComponent = ({
   return (
     <Card>
       <CardActionArea>
-        <CardMedia component="img" image={img} alt={alt} />
+        <CardMedia component="img" image={img} height="160" alt={alt} />
       </CardActionArea>
       <CardContent>
         <CardHeader title={title} subheader={subTitle} sx={{ p: 0, mb: 1 }} />
