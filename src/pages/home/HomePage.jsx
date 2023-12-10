@@ -8,6 +8,8 @@ import axios from "axios";
 import homePageNormalization from "./homePageNormalization";
 import { useSelector } from "react-redux";
 import useQueryParams from "../../hooks/useQueryParams";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 const HomePage = () => {
   const [dataFromServer, setDataFromServer] = useState([]);
@@ -54,26 +56,39 @@ const HomePage = () => {
   console.log(filteredCards);
   return (
     <Container>
-      <Grid container spacing={2}>
-        {filteredCards.map((card) => (
-          <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
-            <CardComponent
-              _id={card._id}
-              title={card.title}
-              subTitle={card.subtitle}
-              phone={card.phone}
-              address={`${card.address.city}, ${card.address.street} ${card.address.houseNumber}`}
-              img={card.image.url}
-              alt={card.image.alt}
-              like={card.likes}
-              cardNumber={card.cardNumber}
-              onDeleteCard={handleDeleteCard}
-              onEditCard={handleEditCard}
-              createdUser={card.user_id}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      {filteredCards.length > 1 ? (
+        <Grid container spacing={2}>
+          {filteredCards.map((card) => (
+            <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
+              <CardComponent
+                _id={card._id}
+                title={card.title}
+                subTitle={card.subtitle}
+                phone={card.phone}
+                address={`${card.address.city}, ${card.address.street} ${card.address.houseNumber}`}
+                img={card.image.url}
+                alt={card.image.alt}
+                like={card.likes}
+                cardNumber={card.cardNumber}
+                onDeleteCard={handleDeleteCard}
+                onEditCard={handleEditCard}
+                createdUser={card.user_id}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            height: "100vh",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
     </Container>
   );
 };

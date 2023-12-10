@@ -38,13 +38,12 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
-  const [myUser, setMyUser] = useState("");
+  const [myUser, setMyUser] = useState(null);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
-  console.log(userData);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   React.useEffect(() => {
@@ -58,7 +57,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
           console.log("err", err);
         });
     }
-  }, []);
+  }, [userData]);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -93,7 +92,6 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleCloseDrawerClick = () => {
     setIsOpen(false);
   };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -218,11 +216,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               </Typography>
             </IconButton>
           </Box>
-          {myUser ? (
-            <p>
-              Hello, {myUser?.name?.first} {myUser?.name?.last}
-            </p>
-          ) : null}
+
+          <p>
+            Hello, {myUser?.name?.first} {myUser?.name?.last}
+          </p>
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
