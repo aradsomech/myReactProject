@@ -35,16 +35,30 @@ import FilterComponent from "./ui/FilterComponent";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
+  const [myUser, setMyUser] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
+  console.log(userData);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  React.useEffect(() => {
+    if (userData) {
+      axios
+        .get(`/users/${userData._id}`)
+        .then(({ data }) => {
+          setMyUser(data);
+        })
+        .catch((err) => {
+          console.log("err", err);
+        });
+    }
+  }, []);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -204,6 +218,12 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
               </Typography>
             </IconButton>
           </Box>
+          {myUser ? (
+            <p>
+              Hello, {myUser?.name?.first} {myUser?.name?.last}
+            </p>
+          ) : null}
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton

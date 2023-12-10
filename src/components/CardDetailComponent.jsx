@@ -88,6 +88,13 @@ const CardDetailComponent = ({
           </Typography>
           <Typography variant="body2">
             <Typography fontWeight="700" variant="subtitle1" component="span">
+              subtitle:{" "}
+            </Typography>
+            {subTitle}
+          </Typography>
+
+          <Typography variant="body2">
+            <Typography fontWeight="700" variant="subtitle1" component="span">
               Phone:{" "}
             </Typography>
             {phone}
@@ -139,6 +146,7 @@ CardDetailComponent.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
   phone: PropTypes.string,
+  email: PropTypes.string,
   address: PropTypes.string,
   img: PropTypes.string,
   alt: PropTypes.string,
