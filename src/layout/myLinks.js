@@ -8,7 +8,7 @@ const myLinks = [
 
 const alwaysLinks = [{ to: ROUTES.HOME, children: "Home page" }];
 const loggedInLinks = [
-  { to: "/profile", children: "Profile page" },
+  { to: ROUTES.PROFILE, children: "Profile page" },
   { to: ROUTES.CREATECARD, children: "Create page" },
   { to: ROUTES.MYCARDS, children: "My Cards" },
   { to: ROUTES.MYFAVORITES, children: "My Favorites" },
