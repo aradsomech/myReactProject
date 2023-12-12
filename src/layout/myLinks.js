@@ -6,7 +6,10 @@ const myLinks = [
   { to: ROUTES.LOGIN, children: "Login page" },
 ];
 
-const alwaysLinks = [{ to: ROUTES.HOME, children: "Home page" }];
+const alwaysLinks = [
+  { to: ROUTES.HOME, children: "Home page" },
+  { to: ROUTES.ABOUTPAGE, children: "About us" },
+];
 const loggedInLinks = [
   { to: ROUTES.PROFILE, children: "Profile page" },
   { to: ROUTES.CREATECARD, children: "Create page" },

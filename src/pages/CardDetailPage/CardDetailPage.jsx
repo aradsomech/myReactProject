@@ -26,7 +26,6 @@ const CardDetailPage = () => {
       )
       .then(({ data }) => {
         setCard(data);
-        console.log(data);
       })
       .catch((err) => {
         console.log("err", err);

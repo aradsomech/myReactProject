@@ -9,5 +9,7 @@ const ROUTES = {
   PROFILE: "/profile",
   MYFAVORITES: "/myfavorites",
   CARDDETAIL: "/carddetail",
+  ABOUTPAGE: "/about",
+  USERSADMIN: "/userspage",
 };
 export default ROUTES;

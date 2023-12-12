@@ -109,7 +109,8 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={() => navigate("/Profile")}>Profile</MenuItem>
+      <MenuItem onClick={() => navigate("/userspage")}>Users</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       {userData ? (
         <MenuItem onClick={handleLogout}>logout</MenuItem>

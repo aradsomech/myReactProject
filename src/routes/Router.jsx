@@ -27,6 +27,8 @@ import MyCardsPage from "../pages/MyCardsPage/MyCardsPage";
 import MyFavoritePage from "../pages/MyFavoritePage/MyFavoritePage";
 import CardDetailPage from "../pages/CardDetailPage/CardDetailPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
+import AboutPage from "../pages/about/AboutPage";
+import UsersPage from "../pages/users/UsersPage";
 
 const Router = () => {
   return (
@@ -35,7 +37,8 @@ const Router = () => {
       <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
       <Route path={ROUTES.PROFILE} element={<ProfilePage />} />
-
+      <Route path={ROUTES.USERSADMIN} element={<UsersPage />} />
+      <Route path={ROUTES.ABOUTPAGE} element={<AboutPage />} />
       <Route path={ROUTES.MYCARDS} element={<MyCardsPage />} />
       <Route path={ROUTES.MYFAVORITES} element={<MyFavoritePage />} />
       <Route
