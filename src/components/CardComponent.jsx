@@ -48,6 +48,7 @@ const CardComponent = ({
   const handlePhoneClick = () => {
     console.log("you clicked on phone btn");
   };
+
   const handleDeleteCardClick = () => {
     axios
       .delete(`/cards/${_id}`)

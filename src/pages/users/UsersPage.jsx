@@ -16,25 +16,25 @@ import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
-const handleDeleteUserClick = () => {
-  axios
-    .delete(
-      "https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/65424ae9a8d1eae12d31e360"
-    )
-    .then(() => {
-      toast.success("Deleted successfully");
-    })
-    .catch((err) => {
-      toast.error("Deletion isnt allowed");
-    });
-};
-
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  useEffect(() => {
+  const handleDeleteUserClick = (id) => {
+    console.log(id);
+    axios
+      .delete(
+        `https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`
+      )
+      .then(() => {
+        toast.success("Deleted successfully");
+        setUsers(users.filter((user) => user._id != id));
+      })
+      .catch((err) => {
+        toast.error("Deletion isnt allowed");
+      });
+  };
+  const fetchUsers = () => {
     axios
       .get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users")
       .then(({ data }) => {
@@ -43,6 +43,9 @@ const UsersPage = () => {
       .catch((err) => {
         console.log("err", err);
       });
+  };
+  useEffect(() => {
+    fetchUsers();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -72,12 +75,12 @@ const UsersPage = () => {
             {users
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((user) => (
-                <TableRow key={user.id}>
+                <TableRow key={user._id}>
                   <TableCell>{user.name.first}</TableCell>
                   <TableCell>{user.name.last}</TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <IconButton onClick={handleDeleteUserClick}>
+                    <IconButton onClick={() => handleDeleteUserClick(user._id)}>
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
