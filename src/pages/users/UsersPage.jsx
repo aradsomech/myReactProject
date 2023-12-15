@@ -10,13 +10,18 @@ import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton"; // Add this line for IconButton
 import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import WorkIcon from "@mui/icons-material/Work";
+import UpgradeIcon from "@mui/icons-material/Upgrade";
+import { useNavigate } from "react-router-dom";
 
 const UsersPage = () => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -32,6 +37,18 @@ const UsersPage = () => {
       })
       .catch((err) => {
         toast.error("Deletion isnt allowed");
+      });
+  };
+  const handleUpgradeUserClick = (id) => {
+    console.log(id);
+    axios
+      .patch(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`)
+      .then(() => {
+        toast.success("Upgrade successfully");
+        setUsers(users.filter((user) => user._id != id));
+      })
+      .catch((err) => {
+        toast.error("Can not be upgraded");
       });
   };
   const fetchUsers = () => {
@@ -66,8 +83,8 @@ const UsersPage = () => {
               <TableCell>First Name</TableCell>
               <TableCell>Last Name</TableCell>
               <TableCell>Email</TableCell>
-              <TableCell>Buisness</TableCell>
               <TableCell>Delete</TableCell>
+              <TableCell>Buisness</TableCell>
               <TableCell>Edit</TableCell>
             </TableRow>
           </TableHead>
@@ -84,8 +101,24 @@ const UsersPage = () => {
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
-                  <TableCell>{/* Add data for Custom Header 2 */}</TableCell>
-                  <TableCell>{/* Add data for Custom Header 3 */}</TableCell>
+                  <TableCell>
+                    {user.isBusiness ? (
+                      <WorkIcon />
+                    ) : (
+                      <UpgradeIcon
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleUpgradeUserClick(user._id)}
+                        color="primary"
+                      />
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() => navigate("/edituser/" + user._id)}
+                    >
+                      <CreateIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>

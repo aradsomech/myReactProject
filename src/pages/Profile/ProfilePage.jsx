@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import CardComponent from "../../components/CardComponent";
 import { errorToast, infoToast } from "../../messages/myToasts";
+import IconButton from "@mui/material/IconButton";
+import CreateIcon from "@mui/icons-material/Create";
 
 const ProfilePage = () => {
   const [userDataFromServer, setUserDataFromServer] = useState({
@@ -53,7 +55,7 @@ const ProfilePage = () => {
         let { data } = await axios.get("/users/" + userData._id);
         setUserDataFromServer(data);
       } catch (err) {
-        errorToast("Something worng...");
+        errorToast("Something wrong...");
       }
     })();
   }, []);
@@ -109,6 +111,11 @@ const ProfilePage = () => {
             <Typography variant="h5" component="p" sx={{ p: 2 }}>
               Phone: {userDataFromServer.phone}
             </Typography>
+            <IconButton
+              onClick={() => navigate("/edituser/" + userDataFromServer._id)}
+            >
+              <CreateIcon />
+            </IconButton>
           </Box>
         </Grid>
         <Grid item xs={false} sm={4} md={5}>

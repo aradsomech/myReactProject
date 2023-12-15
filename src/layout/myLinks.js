@@ -12,7 +12,7 @@ const alwaysLinks = [
 ];
 const loggedInLinks = [
   { to: ROUTES.PROFILE, children: "Profile page" },
-  { to: ROUTES.CREATECARD, children: "Create page" },
+  { to: ROUTES.CREATECARD, children: "Create card" },
   { to: ROUTES.MYCARDS, children: "My Cards" },
   { to: ROUTES.MYFAVORITES, children: "My Favorites" },
 ];

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   TextField,
@@ -11,8 +11,12 @@ import {
 import { Link, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditCardPage = () => {
+  const navigate = useNavigate();
   const [inputsValue, setInputValue] = useState({
     title: "",
     subtitle: "",
@@ -30,14 +34,43 @@ const EditCardPage = () => {
     houseNumber: "",
     zip: "",
   });
+
   const { id: _id } = useParams();
+  console.log(_id);
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
       ...currentState,
       [e.target.id]: e.target.value,
     }));
   };
+  useEffect(() => {
+    axios
+      .get(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/cards/${_id}`)
+      .then(({ data }) => {
+        console.log(data);
+        setInputValue({
+          title: data?.title,
+          subtitle: data?.subtitle,
+          phone: data?.phone,
+          mail: data?.email,
+          description: data?.description,
+          web: data?.web,
+          url: data?.image?.url,
+          alt: data.image.alt,
+          state: data.address.state,
+          country: data.address.country,
+          city: data.address.city,
+          street: data.address.street,
+          houseNumber: data.address.houseNumber,
+          zip: data.address.zip,
+        });
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
   const handleUpdateChangesClick = async () => {
+    console.log("edit");
     try {
       const { data } = await axios.put("/cards/" + _id, {
         title: inputsValue.title,
@@ -59,7 +92,10 @@ const EditCardPage = () => {
           zip: +inputsValue.zip,
         },
       });
+      toast.success("updated successfully");
+      navigate(-1);
     } catch (err) {
+      errorToast("Something wrong...");
       console.log("err", err.response);
     }
   };

@@ -11,5 +11,6 @@ const ROUTES = {
   CARDDETAIL: "/carddetail",
   ABOUTPAGE: "/about",
   USERSADMIN: "/userspage",
+  EDITUSER: "/edituser",
 };
 export default ROUTES;

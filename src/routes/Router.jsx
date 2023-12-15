@@ -29,6 +29,7 @@ import CardDetailPage from "../pages/CardDetailPage/CardDetailPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import AboutPage from "../pages/about/AboutPage";
 import UsersPage from "../pages/users/UsersPage";
+import EditUserPage from "../pages/EditUserPage/EditUserPage";
 
 const Router = () => {
   return (
@@ -56,6 +57,7 @@ const Router = () => {
         }
       />
       <Route path={`${ROUTES.EDITCARD}/:id`} element={<EditCardPage />} />
+      <Route path={`${ROUTES.EDITUSER}/:id`} element={<EditUserPage />} />
       <Route path={ROUTES.SANDBOX} element={<SandboxPage />}>
         <Route path="l1css" element={<Css1Component />} />
         <Route path="effect1" element={<Effect1 />} />

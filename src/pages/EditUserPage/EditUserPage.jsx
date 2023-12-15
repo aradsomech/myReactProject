@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Container,
   TextField,
@@ -8,19 +8,20 @@ import {
   Button,
   Paper,
 } from "@mui/material";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const CreateCardPage = () => {
+const EditUserPage = () => {
+  const navigate = useNavigate();
   const [inputsValue, setInputValue] = useState({
-    title: "",
-    subtitle: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
     phone: "",
-    add: "",
-    mail: "",
-    description: "",
-    web: "",
     url: "",
     alt: "",
     state: "",
@@ -31,25 +32,50 @@ const CreateCardPage = () => {
     zip: "",
   });
 
-  const navigate = useNavigate();
   const { id: _id } = useParams();
-
+  console.log(_id);
   const handleInputChange = (e) => {
     setInputValue((currentState) => ({
       ...currentState,
       [e.target.id]: e.target.value,
     }));
   };
-
+  useEffect(() => {
+    axios
+      .get(`/users/${_id}`)
+      .then(({ data }) => {
+        console.log(data);
+        setInputValue({
+          firstName: data?.name.first,
+          middleName: data?.name.middle,
+          lastName: data?.name.last,
+          phone: data?.phone,
+          url: data?.image?.url,
+          alt: data.image.alt,
+          state: data.address.state,
+          country: data.address.country,
+          city: data.address.city,
+          street: data.address.street,
+          houseNumber: data.address.houseNumber,
+          zip: data.address.zip,
+        });
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  }, []);
   const handleUpdateChangesClick = async () => {
+    console.log("edit");
     try {
-      const { data } = await axios.post("/cards", {
-        title: inputsValue.title,
-        subtitle: inputsValue.subtitle,
-        description: inputsValue.description,
+      console.log("dsds");
+      console.log(_id);
+      const { data } = await axios.put("/users/" + _id, {
+        name: {
+          first: inputsValue.firstName,
+          middle: inputsValue.middleName,
+          last: inputsValue.lastName,
+        },
         phone: inputsValue.phone,
-        email: inputsValue.mail,
-        web: inputsValue.web,
         image: {
           url: inputsValue.url,
           alt: inputsValue.alt,
@@ -60,45 +86,51 @@ const CreateCardPage = () => {
           city: inputsValue.city,
           street: inputsValue.street,
           houseNumber: inputsValue.houseNumber,
-          zip: +inputsValue.zip,
+          zip: inputsValue.zip,
         },
       });
-      // Handle success, you can log or perform other actions if needed
-
-      // Redirect to the "/myCards" route
-      navigate("/myCards/");
+      toast.success("updated successfully");
+      navigate(-1);
     } catch (err) {
-      console.log("Error", err.response);
-      // Handle error if necessary
+      toast.error("something went wrong");
+      console.log("err", err.response);
     }
   };
-
   return (
     <Container sx={{ padding: "50px" }}>
       <Typography variant="h2" sx={{ mb: 1, padding: "10px", pb: "0px" }}>
-        Card - Create
+        User - Edit
       </Typography>
       <Typography variant="body1" sx={{ mb: 1, padding: "3px", ml: "7px" }}>
-        Create your card
+        Put a new values in the correct input
       </Typography>
       <Divider sx={{ mb: 3 }} />
       <Grid container flexDirection={"column"}>
         <TextField
-          id="title"
-          label="Title"
+          id="firstName"
+          label="firstName"
           variant="outlined"
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
-          value={inputsValue.title}
+          value={inputsValue.firstName}
           required
         />
         <TextField
-          id="subtitle"
-          label="SubTitle"
+          id="middleName"
+          label="middle Name"
           variant="outlined"
           sx={{ mt: "10px" }}
           onChange={handleInputChange}
-          value={inputsValue.subtitle}
+          value={inputsValue.middleName}
+          required
+        />
+        <TextField
+          id="lastName"
+          label="last name"
+          variant="outlined"
+          sx={{ mt: "10px" }}
+          onChange={handleInputChange}
+          value={inputsValue.lastName}
           required
         />
         <TextField
@@ -110,32 +142,7 @@ const CreateCardPage = () => {
           value={inputsValue.phone}
           required
         />
-        <TextField
-          id="description"
-          label="Description"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.description}
-          required
-        />
-        <TextField
-          id="web"
-          label="Web"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.web}
-        />
-        <TextField
-          id="mail"
-          label="Email"
-          variant="outlined"
-          sx={{ mt: "10px" }}
-          onChange={handleInputChange}
-          value={inputsValue.mail}
-          required
-        />
+
         <TextField
           id="url"
           label="Url"
@@ -152,6 +159,7 @@ const CreateCardPage = () => {
           onChange={handleInputChange}
           value={inputsValue.alt}
         />
+
         <TextField
           id="state"
           label="State"
@@ -212,7 +220,7 @@ const CreateCardPage = () => {
             sx={{ mt: 2, width: "100%", ml: "0%", bgcolor: "lightskyblue" }}
             onClick={handleUpdateChangesClick}
           >
-            Create Card
+            Update Changes
           </Button>
         </Grid>
         <Grid item xs>
@@ -232,9 +240,7 @@ const CreateCardPage = () => {
           </Link>
         </Grid>
       </Grid>
-      <Paper elevation={1} variant="elevation"></Paper>
     </Container>
   );
 };
-
-export default CreateCardPage;
+export default EditUserPage;
