@@ -30,7 +30,7 @@ const UsersPage = () => {
   useEffect(() => {
     if (!user || !user.isAdmin) {
       toast.error("Access denied. Admins only.");
-      navigate(ROUTES.HOME);
+      navigate(-1);
     }
   }, [user, navigate]);
 

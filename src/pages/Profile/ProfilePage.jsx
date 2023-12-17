@@ -61,6 +61,15 @@ const ProfilePage = () => {
               Country: {userDataFromServer.address.country}
             </Typography>
             <Typography variant="h5" component="p" sx={{ p: 2 }}>
+              city: {userDataFromServer.address.city}
+            </Typography>
+            <Typography variant="h5" component="p" sx={{ p: 2 }}>
+              street: {userDataFromServer.address.street}
+            </Typography>
+            <Typography variant="h5" component="p" sx={{ p: 2 }}>
+              house number: {userDataFromServer.address.houseNumber}
+            </Typography>
+            <Typography variant="h5" component="p" sx={{ p: 2 }}>
               Email: {userDataFromServer.email}
             </Typography>
             <Typography variant="h5" component="p" sx={{ p: 2 }}>
