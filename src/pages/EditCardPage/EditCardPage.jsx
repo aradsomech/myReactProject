@@ -260,9 +260,6 @@ const EditCardPage = () => {
           </Link>
         </Grid>
       </Grid>
-      <Paper elevation={1} variant="elevation">
-        Special thanks to Inon
-      </Paper>
     </Container>
   );
 };
