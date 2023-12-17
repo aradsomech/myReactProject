@@ -66,6 +66,7 @@ const LoginPage = () => {
       });
       autoLogin(true); //skip token test
       navigate(ROUTES.HOME);
+      window.location.reload();
     } catch (err) {
       console.log("err from login", err);
     }

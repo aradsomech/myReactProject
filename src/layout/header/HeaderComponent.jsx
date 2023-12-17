@@ -36,6 +36,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import ROUTES from "../../routes/ROUTES";
 
 const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const [myUser, setMyUser] = useState(null);
@@ -46,6 +47,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const { loggedIn } = useSelector((bigPie) => bigPie.authSlice);
   React.useEffect(() => {
     if (userData) {
       axios
@@ -58,6 +60,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         });
     }
   }, [userData]);
+  console.log(userData);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -73,8 +76,9 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     setTimeout(() => {
+      navigate(ROUTES.HOME);
       window.location.reload();
-    }, 1500);
+    }, 500);
     toast.success("You logged out successfully");
   };
 
@@ -110,8 +114,10 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={() => navigate("/Profile")}>Profile</MenuItem>
-      <MenuItem onClick={() => navigate("/userspage")}>Users</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {userData?.isAdmin && (
+        <MenuItem onClick={() => navigate("/userspage")}>Users</MenuItem>
+      )}
+
       {userData ? (
         <MenuItem onClick={handleLogout}>logout</MenuItem>
       ) : (
@@ -269,7 +275,7 @@ const HeaderComponent = ({ isDarkTheme, onThemeChange }) => {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
+      {loggedIn && renderMenu}
       <LeftDrawerComponent
         isOpen={isOpen}
         onCloseDrawer={handleCloseDrawerClick}

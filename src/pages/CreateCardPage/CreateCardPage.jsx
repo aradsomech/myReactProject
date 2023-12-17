@@ -11,6 +11,8 @@ import {
 import { Link, useParams, useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/ROUTES";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreateCardPage = () => {
   const [inputsValue, setInputValue] = useState({
@@ -66,8 +68,10 @@ const CreateCardPage = () => {
       // Handle success, you can log or perform other actions if needed
 
       // Redirect to the "/myCards" route
+      toast.success("Card created Successfully");
       navigate("/myCards/");
     } catch (err) {
+      toast.error(err?.response?.data);
       console.log("Error", err.response);
       // Handle error if necessary
     }

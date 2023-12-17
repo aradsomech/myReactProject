@@ -48,6 +48,7 @@ const CardComponent = ({
   const handlePhoneClick = () => {
     console.log("you clicked on phone btn");
   };
+  const { loggedIn } = useSelector((bigPie) => bigPie.authSlice);
 
   const handleDeleteCardClick = () => {
     axios
@@ -110,9 +111,12 @@ const CardComponent = ({
             <IconButton onClick={handlePhoneClick}>
               <PhoneIcon />
             </IconButton>
-            <IconButton onClick={handleClickEditCard}>
-              <CreateIcon />
-            </IconButton>
+
+            {userData?.isAdmin || createdUser === userData?._id ? (
+              <IconButton onClick={handleClickEditCard}>
+                <CreateIcon />
+              </IconButton>
+            ) : null}
           </Box>
           <Box>
             {userData?.isAdmin || createdUser === userData?._id ? (

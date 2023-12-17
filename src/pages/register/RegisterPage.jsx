@@ -68,7 +68,7 @@ const RegisterPage = () => {
     console.log("inputsValue", inputsValue);
     try {
       event.preventDefault();
-      toast.error("invalid paramaters");
+
       // inputsValue.isBusiness = false;
       setErrors(validateRegister(inputsValue));
       console.log(errors);
@@ -77,9 +77,11 @@ const RegisterPage = () => {
       }
       let request = normalizeData(inputsValue);
       const { data } = await axios.post("/users", request);
-      console.log("data", data);
+      toast.success("User created successfully");
+      navigate(ROUTES.LOGIN);
     } catch (err) {
       console.log(err);
+      toast.error(err?.response?.data || "error");
     }
   };
   return (

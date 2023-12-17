@@ -114,20 +114,6 @@ const CardDetailComponent = ({
         </Box>
         <Box display="flex" justifyContent="space-between">
           <Box>
-            <IconButton onClick={handlePhoneClick}>
-              <PhoneIcon />
-            </IconButton>
-            <IconButton onClick={handleClickEditCard}>
-              <CreateIcon />
-            </IconButton>
-          </Box>
-          <Box>
-            {userData?.isAdmin || createdUser === userData?._id ? (
-              <IconButton onClick={handleDeleteCardClick}>
-                <DeleteIcon />
-              </IconButton>
-            ) : null}
-
             <IconButton onClick={handleLikeCardClick}>
               <FavoriteIcon color={isLike ? "favActive" : ""} />
             </IconButton>

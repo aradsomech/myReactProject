@@ -95,7 +95,7 @@ const EditCardPage = () => {
       toast.success("updated successfully");
       navigate(-1);
     } catch (err) {
-      errorToast("Something wrong...");
+      toast.error(err.response.data);
       console.log("err", err.response);
     }
   };

@@ -9,28 +9,47 @@ import {
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import myLinks from "../myLinks";
+import myLinks, {
+  adminOrBusinessLinksFooter,
+  alwaysLinkFooter,
+  regularUserLinksFooter,
+} from "../myLinks";
 import NavLinkComponent from "../header/NavLinkComponent";
 import { NavLink } from "react-router-dom";
 import nextKey from "generate-my-key";
+import { useSelector } from "react-redux";
 
 const FooterComponent = () => {
   const [value, setValue] = useState(0);
+  const userData = useSelector((bigPie) => bigPie.authSlice.userData);
   return (
     <Fragment>
       <Divider></Divider>
       <BottomNavigation
         showLabels
+        style={{ backgroundColor: "#1976d2" }}
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
         }}
       >
-        {myLinks.map((mylink) => (
+        {alwaysLinkFooter.map((mylink) => (
           <NavLinkComponent to={mylink.to} key={nextKey()}>
             {mylink.children}
           </NavLinkComponent>
         ))}
+        {userData &&
+          regularUserLinksFooter.map((mylink) => (
+            <NavLinkComponent to={mylink.to} key={nextKey()}>
+              {mylink.children}
+            </NavLinkComponent>
+          ))}
+        {userData?.isAdmin &&
+          adminOrBusinessLinksFooter.map((mylink) => (
+            <NavLinkComponent to={mylink.to} key={nextKey()}>
+              {mylink.children}
+            </NavLinkComponent>
+          ))}
         {/* <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
         <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
         <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} /> */}
