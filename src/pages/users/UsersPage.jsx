@@ -8,23 +8,32 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton"; // Add this line for IconButton
+import IconButton from "@mui/material/IconButton";
 import { toast } from "react-toastify";
-
 import "react-toastify/dist/ReactToastify.css";
 import PhoneIcon from "@mui/icons-material/Phone";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import WorkIcon from "@mui/icons-material/Work";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ROUTES from "../../routes/ROUTES";
 
 const UsersPage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const user = useSelector((state) => state.authSlice.userData);
+
+  useEffect(() => {
+    if (!user || !user.isAdmin) {
+      toast.error("Access denied. Admins only.");
+      navigate(ROUTES.HOME);
+    }
+  }, [user, navigate]);
+
   const handleDeleteUserClick = (id) => {
     console.log(id);
     axios
@@ -33,24 +42,26 @@ const UsersPage = () => {
       )
       .then(() => {
         toast.success("Deleted successfully");
-        setUsers(users.filter((user) => user._id != id));
+        setUsers(users.filter((user) => user._id !== id));
       })
-      .catch((err) => {
-        toast.error("Deletion isnt allowed");
+      .catch(() => {
+        toast.error("Deletion isn't allowed");
       });
   };
+
   const handleUpgradeUserClick = (id) => {
     console.log(id);
     axios
       .patch(`https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users/${id}`)
       .then(() => {
         toast.success("Upgrade successfully");
-        setUsers(users.filter((user) => user._id != id));
+        setUsers(users.filter((user) => user._id !== id));
       })
-      .catch((err) => {
+      .catch(() => {
         toast.error("Can not be upgraded");
       });
   };
+
   const fetchUsers = () => {
     axios
       .get("https://monkfish-app-z9uza.ondigitalocean.app/bcard2/users")
@@ -61,6 +72,7 @@ const UsersPage = () => {
         console.log("err", err);
       });
   };
+
   useEffect(() => {
     fetchUsers();
   }, []);
